@@ -37,6 +37,7 @@ def Miller_Rabin(n, test_time = 1000):
     """
     int -> bool
     returns if n is a prime number using probalistic tests based on Miller-Rabin primality test
+    (Can be reduced to polynomial time if we adimit that generalized Riemann hypothesis holds true)
     """
     if n < 3 or n % 2 == 0:
         return n == 2
@@ -61,3 +62,5 @@ def Miller_Rabin(n, test_time = 1000):
             return False
     
     return True
+
+#AKS (prime is in p)
