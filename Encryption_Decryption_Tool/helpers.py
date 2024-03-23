@@ -43,23 +43,33 @@ def find_coprime(n):
     """
     assert n != 1, "There's no coprime for 1"
 
-    for i in range(2, int(math.sqrt(n)) + 1):
+    while True:
+        i = random.randint(2, n - 2)
         if math.gcd(n, i) == 1:
             return i
-    return
+    
+
+def extended_euclidean(a, b):
+    """
+    int X int -> int X int X int
+    returns gcd(a, b), x, y, such that ax + by = gcd(a, b)
+    """
+    if a == 0:
+        return b, 0, 1
+    
+    g, x, y = extended_euclidean(b % a, a)
+    return (g, y - (b // a) * x, x)
 
 def find_modular_inverse(p, n):
     """
     int x int -> int
-    finds a number q such that (pq = 1) mod n 
+    finds a number q such that (pq = 1) mod n using extended euclidiean algorithm
     """
-    p = p % n
-    for q in range(1, n):
-        if (q * p) % n == 1:
-            return q
-    
-    return
-
+    g, x, y = extended_euclidean(p, n)
+    if g != 1:
+        raise Exception('modular inverse does not exist')
+    else:
+        return x % n
 
 
 #---------------------------------------------------------------------------------------------------
