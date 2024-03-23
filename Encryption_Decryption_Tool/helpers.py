@@ -1,18 +1,9 @@
 import random
-from math import gcd, sqrt
+import math
+import primality_tests
 
 def is_prime(n):
-    """
-    int -> bool
-    checks if a number is a prime
-    (can be slow for very large numbers)
-    """
-    if n <= 1:
-        return False
-    for i in range(2, int(n**0.5) + 1):
-        if n % i == 0:
-            return False
-    return True
+    return primality_tests.Miller_Rabin(n)
 
 def generate_random_prime(min_val, max_val):
     """
@@ -52,8 +43,8 @@ def find_coprime(n):
     """
     assert n != 1, "There's no coprime for 1"
 
-    for i in range(2, int(sqrt(n)) + 1):
-        if gcd(n, i) == 1:
+    for i in range(2, int(math.sqrt(n)) + 1):
+        if math.gcd(n, i) == 1:
             return i
     return
 
@@ -68,6 +59,51 @@ def find_modular_inverse(p, n):
             return q
     
     return
+
+
+
+#---------------------------------------------------------------------------------------------------
+#Exponentiations
+def fast_exponentiation_recur(a, n, MOD = 1):
+    """
+    int X int -> int
+    Calculates a ** n % MOD using fast exponentiation algorithm
+    Recursive version
+    """
+    if n == 0:
+        return 1
+    
+    if n == 1:
+        return a % MOD
+    
+    if n % 2 == 0:
+        b = fast_exponentiation_recur(a, n // 2, MOD)
+        return b * b % MOD
+    else:
+        b = fast_exponentiation_recur(a, (n - 1) // 2, MOD)
+        return (b * b) * a % MOD
+    
+def fast_exponentiation_iter(a, n, MOD = 1):
+    """
+    int X int -> int
+    Calculates a ** n % MOD using fast exponentiation algorithm
+    Iterative version
+    """
+    res = 1
+    i = 0
+    while (n >> i) != 0:
+        if (n >> i) & 1:
+            res *= a
+            res %= MOD
+        a *= a
+        a %= MOD
+
+        i += 1
+        
+    return res
+
+
+
 
 
 

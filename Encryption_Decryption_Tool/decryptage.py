@@ -1,4 +1,5 @@
 import os
+import helpers
 
 PRIVATE_KEY = "private_key.txt"
 
@@ -19,7 +20,7 @@ def decryption(y):
             x *= y
             x %= N
 
-        return x
+    return helpers.fast_exponentiation_iter(y, d, N)
 
 def textDecryption(s):
     """

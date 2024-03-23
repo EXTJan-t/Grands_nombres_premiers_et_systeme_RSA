@@ -1,4 +1,5 @@
 import os
+import helpers
 
 PUBLIC_KEY = "public_key.txt"
 
@@ -13,13 +14,7 @@ def encryption(x):
         
         N, e = int(t[4]), int(t[5])
 
-        #y = (x ** e) % N
-        y = 1
-        for i in range(e):
-            y *= x
-            y %= N
-
-        return y
+    return helpers.fast_exponentiation_iter(x, e, N)
 
 def textEncryption(s):
     """
